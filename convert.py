@@ -593,7 +593,7 @@ def main(player_filename):
     # Get player name
     name = player['bukkit']['lastKnownName'].value
 
-    with open(name + '_.json', 'w') as out_file:
+    with open(name + '.json', 'w') as out_file:
         json.dump(json_data, out_file)
 
 
