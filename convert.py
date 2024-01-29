@@ -223,9 +223,11 @@ def serialize_meta_potion(meta_item_tag):
     
 
 def serialize_meta_spawn_egg(meta_item_tag):
-    meta = serialize_meta_item(meta_item_tag, 'SPAWN_EGG')
-    # TODO: Serialize spawn egg (to be implemented)
-    # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
+    # TODO: Test spawn egg (see "serialize_meta_axolotl_bucket")
+    internal_tag = None
+    if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
+        internal_tag = meta_item_tag['EntityTag']
+    meta = serialize_meta_item(meta_item_tag, 'SPAWN_EGG', internal_tag)
     return meta
     
 
