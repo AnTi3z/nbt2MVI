@@ -84,6 +84,7 @@ def serialize_meta_armor(meta_item_tag):
 
 
 def serialize_meta_armor_stand(meta_item_tag):
+    # TODO: Test armor stand (see "serialize_meta_axolotl_bucket")
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
@@ -228,7 +229,7 @@ def serialize_meta_knowledge_book(meta_item_tag):
     
 
 def serialize_meta_tropical_fish_bucket(meta_item_tag):
-    # TODO: Test tropical fish bucket
+    # TODO: Test tropical fish bucket (see "serialize_meta_axolotl_bucket")
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
@@ -239,7 +240,7 @@ def serialize_meta_tropical_fish_bucket(meta_item_tag):
     
 
 def serialize_meta_axolotl_bucket(meta_item_tag):
-    # TODO: Test axolotl fish bucket
+    # TODO: Test axolotl fish bucket!! (EntityTag doesn't work as expected)
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
@@ -266,6 +267,7 @@ def serialize_meta_suspicious_stew(meta_item_tag):
     
 
 def serialize_meta_entity_tag(meta_item_tag):
+    # TODO: Test with salmon or pufferfish bucket (see "serialize_meta_axolotl_bucket")
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
