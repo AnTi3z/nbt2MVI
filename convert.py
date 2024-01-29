@@ -453,6 +453,7 @@ def get_item_meta(item_type, meta_item_tag):
 
 
 def serialize_item_stack(item_tag):
+    # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/inventory/ItemStack.java#466
     item_data = {
         '==': 'org.bukkit.inventory.ItemStack',
         'v': BUKKIT_VERSION,
