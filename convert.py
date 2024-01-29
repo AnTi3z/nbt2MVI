@@ -147,8 +147,13 @@ def serialize_meta_colorable_armor(meta_item_tag):
 
 def serialize_meta_map(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'MAP')
-    # TODO: Serialize meta map (to be implemented)
-    # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaMap.java
+    # TODO: Test map
+    if 'map' in meta_item_tag:
+        meta['map-id'] = meta_item_tag['map'].value
+    if 'map_is_scaling' in meta_item_tag:
+        meta['scaling'] = bool(meta_item_tag['map_is_scaling'].value)
+    if 'display' in meta_item_tag and 'MapColor' in meta_item_tag['display']:
+        meta['display-map-color'] = meta_item_tag['display']['MapColor'].value
     return meta
     
 
