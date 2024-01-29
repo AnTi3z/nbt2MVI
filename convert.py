@@ -45,6 +45,41 @@ def serialize_enchantments(enchantments_tag):
     return result
 
 
+def serialize_potion_effects(effects):
+    result = []
+    for effect in effects:
+        result.append(
+            {
+                '==': 'PotionEffect',
+                'effect': effect['Id'].value,
+                'duration': effect['Duration'].value,
+                'amplifier': effect['Amplifier'].value,
+                'ambient': bool(effect['Ambient'].value),
+                'has-particles': bool(effect['ShowParticles'].value),
+                'has-icon': bool(effect['ShowIcon'].value),
+            }
+        )
+    return result
+
+
+def serialize_explosion_effects(effects):
+    # TODO: Test explosion effects
+    effect_types = ['BALL', 'BALL_LARGE', 'STAR', 'CREEPER', 'BURST']
+    result = []
+    for effect in effects:
+        result.append(
+            {
+                '==': 'FireworkEffect',
+                'flicker': bool(effect['Flicker'].value),  # bool
+                'trail': bool(effect['Trail'].value),  # bool
+                'colors': effect['Colors'].value,  # colors [IntArray]
+                'fade-colors': effect['FadeColors'].value,  # colors [IntArray]
+                'type': effect_types[effect['Type'].value]
+            }
+        )
+    return result
+
+
 def serialize_modifiers(modifiers):
     result = {}
     # TODO: Serialize attribute modifiers (to be implemented)
@@ -186,23 +221,6 @@ def serialize_meta_enchanted_book(meta_item_tag):
     meta['stored-enchants'] = serialize_enchantments(meta_item_tag['StoredEnchantments'])
     return meta
     
-
-def serialize_explosion_effects(effects):
-    # TODO: Test explosion effects
-    effect_types = ['BALL', 'BALL_LARGE', 'STAR', 'CREEPER', 'BURST']
-    result = []
-    for effect in effects:
-        result.append(
-            {
-                'flicker': bool(effect['Flicker'].value),  # bool
-                'trail': bool(effect['Trail'].value),  # bool
-                'colors': effect['Colors'].value,  # colors list(IntArray)
-                'fade-colors': effect['FadeColors'].value,  # colors list(IntArray)
-                'type': effect_types[effect['Type'].value],  # byte
-            }
-        )
-    return result
-
 
 def serialize_meta_firework(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'FIREWORK')
@@ -476,23 +494,6 @@ def serialize_item_stack(item_tag):
         item_data['meta'] = get_item_meta(item_data['type'], item_tag['tag'])
 
     return item_data
-
-
-def serialize_potion_effects(effects):
-    result = []
-    for effect in effects:
-        result.append(
-            {
-                '==': 'PotionEffect',
-                'effect': effect['Id'].value,
-                'duration': effect['Duration'].value,
-                'amplifier': effect['Amplifier'].value,
-                'ambient': bool(effect['Ambient'].value),
-                'has-particles': bool(effect['ShowParticles'].value),
-                'has-icon': bool(effect['ShowIcon'].value),
-            }
-        )
-    return result
 
 
 def serialize_player_nbt(player_nbt, mv_world='world'):
