@@ -571,7 +571,7 @@ def serialize_player_nbt(player_nbt, mv_world='world'):
     # Parse stats
     json_data[game_mode]['stats'] = {
         'ex': player_nbt['foodExhaustionLevel'].valuestr(),
-        'ma': str(300),  # max air
+        'ma': '300',  # max air
         'fl': player_nbt['foodLevel'].valuestr(),
         'el': player_nbt['XpLevel'].valuestr(),
         'xp': player_nbt['XpP'].valuestr(),
