@@ -216,10 +216,9 @@ def serialize_meta_potion(meta_item_tag):
     # TODO: Test potion color
     if 'CustomPotionColor' in meta_item_tag:
         meta['custom-color'] = meta_item_tag['CustomPotionColor'].value
+    # TODO: Test custom potion effects
     if 'custom_potion_effects' in meta_item_tag:
-        # TODO: Implement custom effects
-        # meta['custom-effects'] = ??
-        pass
+        meta['custom-effects'] = serialize_potion_effects(meta_item_tag['custom_potion_effects'])
     return meta
     
 
