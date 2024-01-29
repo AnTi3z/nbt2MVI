@@ -476,6 +476,23 @@ def serialize_item_stack(item_tag):
     return item_data
 
 
+def serialize_effects(effects):
+    result = []
+    for effect in effects:
+        result.append(
+            {
+                '==': 'PotionEffect',
+                'effect': effect['Id'].value,
+                'duration': effect['Duration'].value,
+                'amplifier': effect['Amplifier'].value,
+                'ambient': bool(effect['Ambient'].value),
+                'has-particles': bool(effect['ShowParticles'].value),
+                'has-icon': bool(effect['ShowIcon'].value),
+            }
+        )
+    return result
+
+
 def serialize_player_nbt(player_nbt):
     # https://github.com/Multiverse/Multiverse-Inventories/blob/main/src/main/java/com/onarandombox/multiverseinventories/DataStrings.java
     game_mode = GAME_MODES[player_nbt['playerGameType'].value]
@@ -533,9 +550,7 @@ def serialize_player_nbt(player_nbt):
     }
 
     # Parse potion effects
-    json_data[game_mode]['potions'] = [
-        # TODO: Implement potion effects serialization
-    ]
+    json_data[game_mode]['potions'] = serialize_effects(player_nbt['ActiveEffects']) if 'ActiveEffects' in player_nbt else []
 
     # Parse stats
     json_data[game_mode]['stats'] = {
