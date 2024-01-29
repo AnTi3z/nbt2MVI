@@ -74,7 +74,6 @@ def serialize_modifiers(modifiers):
 def serialize_meta_armor(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'ARMOR')
     if 'Trim' in meta_item_tag:
-        # TODO: Test armor trim
         trim = meta_item_tag['Trim']
         if 'material' in trim and 'pattern' in trim:
             meta['trim'] = {
