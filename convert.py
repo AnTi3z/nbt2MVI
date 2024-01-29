@@ -324,8 +324,8 @@ def serialize_meta_item(meta_item_tag, meta_type='UNSPECIFIC', internal_tag=None
 
     if 'display' in meta_item_tag:
         display = meta_item_tag['display']
-        if 'name' in display:
-            meta['display-name'] = display['name'].value
+        if 'Name' in display:
+            meta['display-name'] = display['Name'].value
         if 'LocName' in display:
             meta['loc-name'] = display['LocName'].value
         if 'Lore' in display and len(display['Lore']) > 0:
