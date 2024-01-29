@@ -506,8 +506,8 @@ def serialize_effects(effects):
     return result
 
 
-def serialize_player_nbt(player_nbt):
-    # https://github.com/Multiverse/Multiverse-Inventories/blob/main/src/main/java/com/onarandombox/multiverseinventories/DataStrings.java
+def serialize_player_nbt(player_nbt, mv_world='world'):
+    # https://github.com/Multiverse/Multiverse-Inventories/blob/main/src/main/java/com/onarandombox/multiverseinventories/share/Sharables.java
     game_mode = GAME_MODES[player_nbt['playerGameType'].value]
 
     # Build default empty json structure
@@ -544,7 +544,7 @@ def serialize_player_nbt(player_nbt):
     json_data[game_mode]['lastLocation'] = {
         '==': 'org.bukkit.Location',
         # TODO: Add location world name
-        'world': None,  # mv world + player['Dimension']
+        'world': mv_world,  # + player['Dimension']
         'x': player_nbt['Pos'][0].value,
         'y': player_nbt['Pos'][1].value,
         'z': player_nbt['Pos'][2].value,
@@ -556,7 +556,7 @@ def serialize_player_nbt(player_nbt):
     json_data[game_mode]['bedSpawnLocation'] = {
         '==': 'org.bukkit.Location',
         # TODO: Add spawn world name
-        'world': None,  # mv world + player['SpawnDimension']
+        'world': mv_world,  # + player['SpawnDimension']
         'x': player_nbt['SpawnX'].value,
         'y': player_nbt['SpawnY'].value,
         'z': player_nbt['SpawnZ'].value,
