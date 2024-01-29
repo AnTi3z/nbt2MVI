@@ -152,7 +152,7 @@ def serialize_meta_leather_armor(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'LEATHER_ARMOR')
     # TODO: Test leather armor color
     if 'display' in meta_item_tag and 'color' in meta_item_tag['display']:
-        meta['color'] = meta_item_tag['display']['color']
+        meta['color'] = meta_item_tag['display']['color'].value
     return meta
     
 
@@ -160,7 +160,7 @@ def serialize_meta_colorable_armor(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'COLORABLE_ARMOR')
     # TODO: Test armor color
     if 'display' in meta_item_tag and 'color' in meta_item_tag['display']:
-        meta['color'] = meta_item_tag['display']['color']
+        meta['color'] = meta_item_tag['display']['color'].value
     return meta
     
 
