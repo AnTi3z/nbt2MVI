@@ -565,7 +565,8 @@ def serialize_player_nbt(player_nbt, mv_world='world'):
     }
 
     # Parse potion effects
-    json_data[game_mode]['potions'] = serialize_effects(player_nbt['ActiveEffects']) if 'ActiveEffects' in player_nbt else []
+    if 'ActiveEffects' in player_nbt:
+        json_data[game_mode]['potions'] = serialize_potion_effects(player_nbt['ActiveEffects'])
 
     # Parse stats
     json_data[game_mode]['stats'] = {
