@@ -497,17 +497,19 @@ def serialize_player_nbt(player_nbt):
     # https://github.com/Multiverse/Multiverse-Inventories/blob/main/src/main/java/com/onarandombox/multiverseinventories/DataStrings.java
     game_mode = GAME_MODES[player_nbt['playerGameType'].value]
 
-    # Build json structure
+    # Build default empty json structure
     json_data = {
         game_mode: {
-            'inventoryContents': dict(),
-            'offHandItem': dict(),
-            'potions': list(),
-            'enderChestContents': dict(),
-            'lastLocation': dict(),
-            'bedSpawnLocation': dict(),
-            'armorContents': dict(),
-            'stats': dict()
+            'inventoryContents': {},
+            'offHandItem': {
+                "==": "org.bukkit.inventory.ItemStack",
+                "v": BUKKIT_VERSION,
+                "type": "AIR",
+                "amount": 0
+            },
+            'potions': [],
+            'enderChestContents': {},
+            'armorContents': {},
         }
     }
 
