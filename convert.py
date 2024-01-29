@@ -489,7 +489,7 @@ def serialize_item_stack(item_tag):
     return item_data
 
 
-def serialize_effects(effects):
+def serialize_potion_effects(effects):
     result = []
     for effect in effects:
         result.append(
