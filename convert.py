@@ -277,11 +277,10 @@ def serialize_meta_entity_tag(meta_item_tag):
 def serialize_meta_compass(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'COMPASS')
     if 'LodestoneDimension' in meta_item_tag and 'LodestonePos' in meta_item_tag:
-        # TODO: Check on how multiverse worlds should be saved here
         meta['LodestonePosWorld'] = meta_item_tag['LodestoneDimension'].value
-        meta['LodestonePosX'] = meta_item_tag['LodestonePos']['LodestonePosX'].value
-        meta['LodestonePosY'] = meta_item_tag['LodestonePos']['LodestonePosY'].value
-        meta['LodestonePosZ'] = meta_item_tag['LodestonePos']['LodestonePosZ'].value
+        meta['LodestonePosX'] = meta_item_tag['LodestonePos']['X'].value
+        meta['LodestonePosY'] = meta_item_tag['LodestonePos']['Y'].value
+        meta['LodestonePosZ'] = meta_item_tag['LodestonePos']['Z'].value
     if 'LodestoneTracked' in meta_item_tag:
         meta['LodestoneTracked'] = bool(meta_item_tag['LodestoneTracked'].value)
     return meta
