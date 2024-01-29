@@ -539,18 +539,17 @@ def serialize_player_nbt(player_nbt):
 
     # Parse stats
     json_data[game_mode]['stats'] = {
-        # TODO: Check stats params should be string values
-        'ex': player_nbt['foodExhaustionLevel'].value,
-        'ma': 300,  # max air
-        'fl': player_nbt['foodLevel'].value,
-        'el': player_nbt['XpLevel'].value,
-        'xp': player_nbt['XpP'].value,
-        'hp': player_nbt['Health'].value,
-        'txp': player_nbt['XpTotal'].value,
-        'fd': player_nbt['FallDistance'].value,
-        'ft': player_nbt['Fire'].value,
-        'sa': player_nbt['foodSaturationLevel'].value,
-        'ra': player_nbt['Air'].value,
+        'ex': player_nbt['foodExhaustionLevel'].valuestr(),
+        'ma': str(300),  # max air
+        'fl': player_nbt['foodLevel'].valuestr(),
+        'el': player_nbt['XpLevel'].valuestr(),
+        'xp': player_nbt['XpP'].valuestr(),
+        'hp': player_nbt['Health'].valuestr(),
+        'txp': player_nbt['XpTotal'].valuestr(),
+        'fd': player_nbt['FallDistance'].valuestr(),
+        'ft': player_nbt['Fire'].valuestr(),
+        'sa': player_nbt['foodSaturationLevel'].valuestr(),
+        'ra': player_nbt['Air'].valuestr(),
     }
 
     return json_data
