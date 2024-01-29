@@ -5,7 +5,9 @@ import base64
 
 import nbt
 
-# https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/
+# https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/
+# https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/
+# https://github.com/Multiverse/Multiverse-Inventories/
 
 BUKKIT_VERSION = 3465
 GAME_MODES = ['SURVIVAL', 'CREATIVE', 'ADVENTURE', 'SPECTATOR']
