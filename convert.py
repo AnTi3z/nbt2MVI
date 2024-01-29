@@ -295,8 +295,9 @@ def serialize_meta_crossbow(meta_item_tag):
 
 def serialize_meta_suspicious_stew(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'SUSPICIOUS_STEW')
-    # TODO: Serialize suspicious stew (to be implemented)
-    # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSuspiciousStew.java
+    # TODO: Test suspicious stew effects
+    if 'effects' in meta_item_tag:
+        meta['effects'] = serialize_potion_effects(meta_item_tag['effects'])
     return meta
     
 
