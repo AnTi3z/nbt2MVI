@@ -199,24 +199,37 @@ def serialize_meta_enchanted_book(meta_item_tag):
     return meta
     
 
+def serialize_explosion_effects(effects):
+    # TODO: Test explosion effects
+    effect_types = ['BALL', 'BALL_LARGE', 'STAR', 'CREEPER', 'BURST']
+    result = []
+    for effect in effects:
+        result.append(
+            {
+                'flicker': bool(effect['Flicker'].value),  # bool
+                'trail': bool(effect['Trail'].value),  # bool
+                'colors': effect['Colors'].value,  # colors list(IntArray)
+                'fade-colors': effect['FadeColors'].value,  # colors list(IntArray)
+                'type': effect_types[effect['Type'].value],  # byte
+            }
+        )
+    return result
+
+
 def serialize_meta_firework(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'FIREWORK')
     if 'Fireworks' in meta_item_tag:
         fireworks = meta_item_tag['Fireworks']
         meta['power'] = fireworks['Flight'].value
         if 'Explosions' in fireworks:
-            # TODO: Add firework effects
-            # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaFirework.java#72
-            meta['firework-effects'] = {}
+            meta['firework-effects'] = serialize_explosion_effects(fireworks['Explosions'])
     return meta
     
 
 def serialize_meta_charge(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'FIREWORK_EFFECT')
     if 'Explosions' in meta_item_tag:
-        # TODO: Add firework effects
-        # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaFirework.java#72
-        meta['firework-effects'] = {}
+        meta['firework-effects'] = serialize_explosion_effects(meta_item_tag['Explosions'])
     return meta
     
 
