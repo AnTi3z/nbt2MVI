@@ -125,7 +125,7 @@ def serialize_meta_book(meta_item_tag, meta_type='BOOK'):
             pages = [page[:max_page_length] for page in pages]
         meta['pages'] = pages
     if 'resolved' in meta_item_tag:
-        meta['resolved'] = meta_item_tag['resolved'].value
+        meta['resolved'] = bool(meta_item_tag['resolved'].value)
     if 'generation' in meta_item_tag:
         meta['generation'] = meta_item_tag['generation'].value
     return meta
@@ -283,7 +283,7 @@ def serialize_meta_compass(meta_item_tag):
         meta['LodestonePosY'] = meta_item_tag['LodestonePos']['LodestonePosY'].value
         meta['LodestonePosZ'] = meta_item_tag['LodestonePos']['LodestonePosZ'].value
     if 'LodestoneTracked' in meta_item_tag:
-        meta['LodestoneTracked'] = meta_item_tag['LodestoneTracked'].value
+        meta['LodestoneTracked'] = bool(meta_item_tag['LodestoneTracked'].value)
     return meta
     
 
