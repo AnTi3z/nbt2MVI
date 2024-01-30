@@ -602,17 +602,17 @@ def serialize_player_nbt(player_nbt, mv_world='world'):
 
     # Parse stats
     json_data[game_mode]['stats'] = {
-        'ex': player_nbt['foodExhaustionLevel'].valuestr(),
-        'ma': '300',  # max air
-        'fl': player_nbt['foodLevel'].valuestr(),
-        'el': player_nbt['XpLevel'].valuestr(),
-        'xp': player_nbt['XpP'].valuestr(),
-        'hp': player_nbt['Health'].valuestr(),
-        'txp': player_nbt['XpTotal'].valuestr(),
-        'fd': player_nbt['FallDistance'].valuestr(),
-        'ft': player_nbt['Fire'].valuestr(),
-        'sa': player_nbt['foodSaturationLevel'].valuestr(),
-        'ra': player_nbt['Air'].valuestr(),
+        'ex': player_nbt['foodExhaustionLevel'].valuestr(),  # Float
+        'ma': '300',  # Integer (max air)
+        'fl': player_nbt['foodLevel'].valuestr(),  # Integer
+        'el': player_nbt['XpLevel'].valuestr(),  # Integer
+        'xp': player_nbt['XpP'].valuestr(),  # Float
+        'hp': player_nbt['Health'].valuestr(),  # Double
+        'txp': player_nbt['XpTotal'].valuestr(),  # Integer
+        'fd': player_nbt['FallDistance'].valuestr(),  # Float
+        'ft': player_nbt['Fire'].valuestr(),  # Integer
+        'sa': player_nbt['foodSaturationLevel'].valuestr(),  # Float
+        'ra': player_nbt['Air'].valuestr(),  # Integer
     }
 
     return json_data
