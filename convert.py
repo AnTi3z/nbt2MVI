@@ -45,39 +45,39 @@ def serialize_enchantments(enchantments_tag):
     return result
 
 
-def serialize_potion_effects(effects):
-    result = []
-    for effect in effects:
-        result.append(
-            {
-                '==': 'PotionEffect',
-                'effect': effect['Id'].value,
-                'duration': effect['Duration'].value,
-                'amplifier': effect['Amplifier'].value,
-                'ambient': bool(effect['Ambient'].value),
-                'has-particles': bool(effect['ShowParticles'].value),
-                'has-icon': bool(effect['ShowIcon'].value),
-            }
-        )
-    return result
+def serialize_color(color_int, has_alpha=False):
+    return {
+        '==': 'Color',
+        'ALPHA': color_int >> 24 & 0xff if has_alpha else 255,
+        'RED': color_int >> 0 & 0xff,
+        'BLUE': color_int >> 16 & 0xff,
+        'GREEN': color_int >> 8 & 0xff
+    }
 
 
-def serialize_explosion_effects(effects):
+def serialize_potion_effect(effect):
+    return {
+        '==': 'PotionEffect',
+        'effect': effect['Id'].value,
+        'duration': effect['Duration'].value,
+        'amplifier': effect['Amplifier'].value,
+        'ambient': bool(effect['Ambient'].value),
+        'has-particles': bool(effect['ShowParticles'].value),
+        'has-icon': bool(effect['ShowIcon'].value),
+    }
+
+
+def serialize_explosion_effect(effect):
     # TODO: Test explosion effects
-    effect_types = ['BALL', 'BALL_LARGE', 'STAR', 'CREEPER', 'BURST']
-    result = []
-    for effect in effects:
-        result.append(
-            {
+    effect_types = ('BALL', 'BALL_LARGE', 'STAR', 'CREEPER', 'BURST')
+    return {
                 '==': 'FireworkEffect',
-                'flicker': bool(effect['Flicker'].value),  # bool
-                'trail': bool(effect['Trail'].value),  # bool
-                'colors': effect['Colors'].value,  # colors [IntArray]
-                'fade-colors': effect['FadeColors'].value,  # colors [IntArray]
+                'flicker': bool(effect['Flicker'].value),
+                'trail': bool(effect['Trail'].value),
+                'colors': [serialize_color(color) for color in effect['Colors']],
+                'fade-colors': [serialize_color(color) for color in effect['FadeColors']],
                 'type': effect_types[effect['Type'].value]
             }
-        )
-    return result
 
 
 def serialize_modifiers(modifiers):
@@ -184,7 +184,7 @@ def serialize_meta_leather_armor(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'LEATHER_ARMOR')
     # TODO: Test leather armor color
     if 'display' in meta_item_tag and 'color' in meta_item_tag['display']:
-        meta['color'] = meta_item_tag['display']['color'].value
+        meta['color'] = serialize_color(meta_item_tag['display']['color'].value)
     return meta
     
 
@@ -192,7 +192,7 @@ def serialize_meta_colorable_armor(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'COLORABLE_ARMOR')
     # TODO: Test armor color
     if 'display' in meta_item_tag and 'color' in meta_item_tag['display']:
-        meta['color'] = meta_item_tag['display']['color'].value
+        meta['color'] = serialize_color(meta_item_tag['display']['color'].value)
     return meta
     
 
@@ -204,7 +204,7 @@ def serialize_meta_map(meta_item_tag):
     if 'map_is_scaling' in meta_item_tag:
         meta['scaling'] = bool(meta_item_tag['map_is_scaling'].value)
     if 'display' in meta_item_tag and 'MapColor' in meta_item_tag['display']:
-        meta['display-map-color'] = meta_item_tag['display']['MapColor'].value
+        meta['display-map-color'] = serialize_color(meta_item_tag['display']['MapColor'].value)
     return meta
     
 
@@ -213,12 +213,10 @@ def serialize_meta_potion(meta_item_tag):
     # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaPotion.java
     if 'Potion' in meta_item_tag and meta_item_tag['Potion'].value != 'empty':
         meta['potion-type'] = meta_item_tag['Potion'].value
-    # TODO: Test potion color
     if 'CustomPotionColor' in meta_item_tag:
-        meta['custom-color'] = meta_item_tag['CustomPotionColor'].value
-    # TODO: Test custom potion effects
+        meta['custom-color'] = serialize_color(meta_item_tag['CustomPotionColor'].value)
     if 'custom_potion_effects' in meta_item_tag:
-        meta['custom-effects'] = serialize_potion_effects(meta_item_tag['custom_potion_effects'])
+        meta['custom-effects'] = [serialize_potion_effect(effect) for effect in meta_item_tag['custom_potion_effects']]
     return meta
     
 
@@ -243,14 +241,14 @@ def serialize_meta_firework(meta_item_tag):
         fireworks = meta_item_tag['Fireworks']
         meta['power'] = fireworks['Flight'].value
         if 'Explosions' in fireworks:
-            meta['firework-effects'] = serialize_explosion_effects(fireworks['Explosions'])
+            meta['firework-effects'] = [serialize_explosion_effect(effect) for effect in fireworks['Explosions']]
     return meta
     
 
 def serialize_meta_charge(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'FIREWORK_EFFECT')
     if 'Explosions' in meta_item_tag:
-        meta['firework-effects'] = serialize_explosion_effects(meta_item_tag['Explosions'])
+        meta['firework-effects'] = [serialize_explosion_effect(effect) for effect in meta_item_tag['Explosions']]
     return meta
     
 
@@ -297,7 +295,7 @@ def serialize_meta_suspicious_stew(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'SUSPICIOUS_STEW')
     # TODO: Test suspicious stew effects
     if 'effects' in meta_item_tag:
-        meta['effects'] = serialize_potion_effects(meta_item_tag['effects'])
+        meta['effects'] = [serialize_potion_effect(effect) for effect in meta_item_tag['effects']]
     return meta
     
 
@@ -572,7 +570,7 @@ def serialize_player_nbt(player_nbt, mv_world='world'):
 
     # Parse potion effects
     if 'ActiveEffects' in player_nbt:
-        json_data[game_mode]['potions'] = serialize_potion_effects(player_nbt['ActiveEffects'])
+        json_data[game_mode]['potions'] = [serialize_potion_effect(effect) for effect in player_nbt['ActiveEffects']]
 
     # Parse stats
     json_data[game_mode]['stats'] = {
