@@ -10,7 +10,31 @@ import nbt
 # https://github.com/Multiverse/Multiverse-Inventories/
 
 BUKKIT_VERSION = 3465
-GAME_MODES = ['SURVIVAL', 'CREATIVE', 'ADVENTURE', 'SPECTATOR']
+GAME_MODES = ('SURVIVAL', 'CREATIVE', 'ADVENTURE', 'SPECTATOR')
+
+# https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java#1394
+HANDLED_TAGS = (
+    'display', 'CustomModelData', 'BlockStateTag', 'RepairCost', 'Enchantments', 'HideFlags', 'Unbreakable', 'Damage',
+    'PublicBukkitValues', 'AttributeModifiers', 'AttributeName', 'Name', 'Amount', 'UUIDMost', 'UUIDLeast', 'Slot',
+    'Trim', 'material', 'pattern',  # Meta Armor
+    'map_is_scaling', 'MapColor', 'map',  # Meta Map
+    'custom_potion_effects', 'Potion', 'CustomPotionColor',  # Meta Potion
+    'SkullOwner', 'SkullProfile',  # Meta Skull
+    'EntityTag',  # Meta Spawn Egg
+    'BlockEntityTag',  # Meta Block State
+    'title', 'author', 'pages', 'resolved', 'generation',  # Meta Book
+    'Fireworks',  # Meta Firework
+    'StoredEnchantments',  # Meta Enchanted Book
+    'Explosion',  # Meta Charge
+    'Recipes',  # Meta Knowledge Book
+    'BucketVariantTag',  # Meta Tropical Fish Bucket
+    'Variant',  # Meta Axolotl Bucket
+    'Charged', 'ChargedProjectiles',  # Meta Crossbow
+    'effects',  # Meta Suspicious Stew
+    'LodestoneDimension', 'LodestonePos', 'LodestoneTracked',  # Meta Compass
+    'Items',  # Meta Bundle
+    'instrument',  # Meta Music Instrument
+)
 
 
 def serialize_enchantments(enchantments_tag):
@@ -102,7 +126,6 @@ def serialize_meta_armor(meta_item_tag):
 
 
 def serialize_meta_armor_stand(meta_item_tag):
-    # TODO: Test armor stand (see "serialize_meta_axolotl_bucket")
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
@@ -218,7 +241,6 @@ def serialize_meta_potion(meta_item_tag):
 
 
 def serialize_meta_spawn_egg(meta_item_tag):
-    # TODO: Test spawn egg (see "serialize_meta_axolotl_bucket")
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
@@ -258,7 +280,6 @@ def serialize_meta_knowledge_book(meta_item_tag):
 
 
 def serialize_meta_tropical_fish_bucket(meta_item_tag):
-    # TODO: Test tropical fish bucket (see "serialize_meta_axolotl_bucket")
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
@@ -269,7 +290,6 @@ def serialize_meta_tropical_fish_bucket(meta_item_tag):
 
 
 def serialize_meta_axolotl_bucket(meta_item_tag):
-    # TODO: Test axolotl fish bucket!! (EntityTag doesn't work as expected)
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
@@ -296,7 +316,6 @@ def serialize_meta_suspicious_stew(meta_item_tag):
 
 
 def serialize_meta_entity_tag(meta_item_tag):
-    # TODO: Test with salmon or pufferfish bucket (see "serialize_meta_axolotl_bucket")
     internal_tag = None
     if 'EntityTag' in meta_item_tag and len(meta_item_tag['EntityTag']) > 0:
         internal_tag = meta_item_tag['EntityTag']
@@ -379,10 +398,13 @@ def serialize_meta_item(meta_item_tag, meta_type='UNSPECIFIC', internal_tag=None
     if 'Damage' in meta_item_tag and meta_item_tag['Damage'].value > 0:
         meta['Damage'] = meta_item_tag['Damage'].value
 
+    internal = [meta_item_tag[tag] for tag in meta_item_tag if tag not in HANDLED_TAGS]
     if internal_tag is not None:
+        internal.append(internal_tag)
+    if len(internal) > 0:
         with io.BytesIO() as out:
             internal_nbt = nbt.nbt.NBTFile()
-            internal_nbt.tags.append(internal_tag)
+            internal_nbt.tags = internal
             internal_nbt.write_file(fileobj=out)
             meta['internal'] = base64.b64encode(out.getvalue()).decode('utf-8')
 
