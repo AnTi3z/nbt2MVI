@@ -577,7 +577,7 @@ def serialize_player_nbt(player_nbt, mv_world):
     # Parse last location
     json_data[game_mode]['lastLocation'] = {
         '==': 'org.bukkit.Location',
-        'world': mv_world + dimensions[player_nbt['Dimension']],
+        'world': mv_world + dimensions[player_nbt['Dimension'].value],
         'x': player_nbt['Pos'][0].value,
         'y': player_nbt['Pos'][1].value,
         'z': player_nbt['Pos'][2].value,
@@ -588,7 +588,7 @@ def serialize_player_nbt(player_nbt, mv_world):
     # Parse spawn location
     json_data[game_mode]['bedSpawnLocation'] = {
         '==': 'org.bukkit.Location',
-        'world': mv_world + dimensions[player_nbt['SpawnDimension']],
+        'world': mv_world + dimensions[player_nbt['SpawnDimension'].value],
         'x': player_nbt['SpawnX'].value,
         'y': player_nbt['SpawnY'].value,
         'z': player_nbt['SpawnZ'].value,
