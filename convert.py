@@ -163,23 +163,21 @@ def serialize_meta_block_state(meta_item_tag, item_type):
 
 
 def serialize_meta_book(meta_item_tag, meta_type='BOOK'):
-    max_page_length = 320
-
     meta = serialize_meta_item(meta_item_tag, meta_type)
     if 'title' in meta_item_tag:
         meta['title'] = meta_item_tag['title'].value
     if 'author' in meta_item_tag:
         meta['author'] = meta_item_tag['author'].value
     if 'pages' in meta_item_tag:
-        pages = meta_item_tag['pages'].value
-        if meta_type == 'BOOK_SIGNED':
-            # TODO: Check and implement book pages
-            # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java#111
-            # page = CraftChatMessage.fromJSONOrStringToJSON(page, false, true, MAX_PAGE_LENGTH, false)
-            pages = [page[:max_page_length] for page in pages]
-        else:
-            pages = [page[:max_page_length] for page in pages]
-        meta['pages'] = pages
+        pages = meta_item_tag['pages']
+        # TODO: Implement book pages normalization
+        # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java#111
+        # max_page_length = 320
+        # if meta_type == 'BOOK_SIGNED':
+        #    page = CraftChatMessage.fromJSONOrStringToJSON(page, nullable=false, keepNewlines=true, max_page_length, checkJsonContentLength=false)
+        # else:
+        #    pages = [page[:max_page_length] for page in pages]
+        meta['pages'] = list(pages)
     if 'resolved' in meta_item_tag:
         meta['resolved'] = bool(meta_item_tag['resolved'].value)
     if 'generation' in meta_item_tag:
