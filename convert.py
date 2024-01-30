@@ -378,6 +378,9 @@ def serialize_meta_item(meta_item_tag, meta_type='UNSPECIFIC', internal_tag=None
     if 'BlockStateTag' in meta_item_tag:
         # TODO: Implement item BlockStateTag serialization
         # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java#1250
+        # blockData = meta_item_tag['BlockStateTag'] # TAG_Compound
+        # meta['BlockStateTag'] = CraftNBTTagConfigSerializer.serialize(blockData)
+        #       -> return SnbtPrinterTagVisitor().visit(blockData) (net.minecraft.nbt.SnbtPrinterTagVisitor)
         pass
 
     if 'Enchantments' in meta_item_tag and len(meta_item_tag['Enchantments']) > 0:
