@@ -275,7 +275,7 @@ def serialize_meta_knowledge_book(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'KNOWLEDGE_BOOK')
     # TODO: Test knowledge book
     if 'Recipes' in meta_item_tag and len(meta_item_tag['Recipes']) > 0:
-        meta['Recipes'] = meta_item_tag['Recipes'].value
+        meta['Recipes'] = list(meta_item_tag['Recipes'])
     return meta
 
 
