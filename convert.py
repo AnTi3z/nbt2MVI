@@ -192,10 +192,18 @@ def serialize_meta_book_signed(meta_item_tag):
 
 def serialize_meta_skull(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'SKULL')
-    # TODO: Check and implement skull
+    # TODO: Implement skull owner
     # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
     if 'SkullOwner' in meta_item_tag:
-        # meta['skull-owner'] = meta_item_tag['SkullOwner'] ??
+        # meta['skull-owner'] = meta_item_tag['SkullOwner'] # TAG_String or TAG_Compound
+        # GameProfileSerializer.readGameProfile(TAG_Compound)
+        # GameProfile(TAG_String) # UUID ?
+        # {
+        #     '==': 'PlayerProfile',
+        #     'uniqueId': None,
+        #     'name': None,
+        #     'properties': []
+        # }
         pass
     if 'BlockEntityTag' in meta_item_tag and 'note_block_sound' in meta_item_tag['BlockEntityTag']:
         meta['note_block_sound'] = meta_item_tag['BlockEntityTag']['note_block_sound'].value
