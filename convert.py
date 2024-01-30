@@ -399,7 +399,7 @@ def serialize_meta_item(meta_item_tag, meta_type='UNSPECIFIC', internal_tag=None
         meta['ItemFlags'] = [flag for bit, flag in item_flags if bit == '1']
 
     if 'Unbreakable' in meta_item_tag:
-        meta['Unbreakable'] = meta_item_tag['Unbreakable'].value
+        meta['Unbreakable'] = bool(meta_item_tag['Unbreakable'].value)
 
     if 'Damage' in meta_item_tag and meta_item_tag['Damage'].value > 0:
         meta['Damage'] = meta_item_tag['Damage'].value
