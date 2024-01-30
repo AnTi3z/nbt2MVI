@@ -534,7 +534,7 @@ def serialize_item_stack(item_tag):
     return item_data
 
 
-def serialize_player_nbt(player_nbt, mv_world='world'):
+def serialize_player_nbt(player_nbt, mv_world):
     # https://github.com/Multiverse/Multiverse-Inventories/blob/main/src/main/java/com/onarandombox/multiverseinventories/share/Sharables.java
     game_mode = GAME_MODES[player_nbt['playerGameType'].value]
 
@@ -618,10 +618,10 @@ def serialize_player_nbt(player_nbt, mv_world='world'):
     return json_data
 
 
-def main(player_filename):
+def main(player_filename, mv_world='world'):
     player = nbt.nbt.NBTFile(player_filename, 'rb')
 
-    json_data = serialize_player_nbt(player)
+    json_data = serialize_player_nbt(player, mv_world)
 
     # Get player name
     name = player['bukkit']['lastKnownName'].value
@@ -632,10 +632,11 @@ def main(player_filename):
 
 def test():
     player = nbt.nbt.NBTFile('76121406-7ac6-32c8-90ee-2368a675ad02.dat', 'rb')
-    result = serialize_player_nbt(player)
+    result = serialize_player_nbt(player, 'world')
     print(result)
 
 
 if __name__ == '__main__':
     # test()
-    main(sys.argv[1])
+    world = sys.argv[2] if len(sys.argv) > 2 else 'world'
+    main(sys.argv[1], world)
