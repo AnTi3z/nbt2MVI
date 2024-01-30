@@ -167,7 +167,7 @@ def serialize_meta_book(meta_item_tag, meta_type='BOOK'):
 def serialize_meta_book_signed(meta_item_tag):
     meta = serialize_meta_book(meta_item_tag, 'BOOK_SIGNED')
     return meta
-    
+
 
 def serialize_meta_skull(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'SKULL')
@@ -179,27 +179,24 @@ def serialize_meta_skull(meta_item_tag):
     if 'BlockEntityTag' in meta_item_tag and 'note_block_sound' in meta_item_tag['BlockEntityTag']:
         meta['note_block_sound'] = meta_item_tag['BlockEntityTag']['note_block_sound'].value
     return meta
-    
+
 
 def serialize_meta_leather_armor(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'LEATHER_ARMOR')
-    # TODO: Test leather armor color
     if 'display' in meta_item_tag and 'color' in meta_item_tag['display']:
         meta['color'] = serialize_color(meta_item_tag['display']['color'].value)
     return meta
-    
+
 
 def serialize_meta_colorable_armor(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'COLORABLE_ARMOR')
-    # TODO: Test armor color
     if 'display' in meta_item_tag and 'color' in meta_item_tag['display']:
         meta['color'] = serialize_color(meta_item_tag['display']['color'].value)
     return meta
-    
+
 
 def serialize_meta_map(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'MAP')
-    # TODO: Test map
     if 'map' in meta_item_tag:
         meta['map-id'] = meta_item_tag['map'].value
     if 'map_is_scaling' in meta_item_tag:
@@ -207,11 +204,10 @@ def serialize_meta_map(meta_item_tag):
     if 'display' in meta_item_tag and 'MapColor' in meta_item_tag['display']:
         meta['display-map-color'] = serialize_color(meta_item_tag['display']['MapColor'].value)
     return meta
-    
+
 
 def serialize_meta_potion(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'POTION')
-    # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaPotion.java
     if 'Potion' in meta_item_tag and meta_item_tag['Potion'].value != 'empty':
         meta['potion-type'] = meta_item_tag['Potion'].value
     if 'CustomPotionColor' in meta_item_tag:
@@ -219,7 +215,7 @@ def serialize_meta_potion(meta_item_tag):
     if 'custom_potion_effects' in meta_item_tag:
         meta['custom-effects'] = [serialize_potion_effect(effect) for effect in meta_item_tag['custom_potion_effects']]
     return meta
-    
+
 
 def serialize_meta_spawn_egg(meta_item_tag):
     # TODO: Test spawn egg (see "serialize_meta_axolotl_bucket")
@@ -228,13 +224,13 @@ def serialize_meta_spawn_egg(meta_item_tag):
         internal_tag = meta_item_tag['EntityTag']
     meta = serialize_meta_item(meta_item_tag, 'SPAWN_EGG', internal_tag)
     return meta
-    
+
 
 def serialize_meta_enchanted_book(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'ENCHANTED')
     meta['stored-enchants'] = serialize_enchantments(meta_item_tag['StoredEnchantments'])
     return meta
-    
+
 
 def serialize_meta_firework(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'FIREWORK')
@@ -244,14 +240,14 @@ def serialize_meta_firework(meta_item_tag):
         if 'Explosions' in fireworks:
             meta['firework-effects'] = [serialize_explosion_effect(effect) for effect in fireworks['Explosions']]
     return meta
-    
+
 
 def serialize_meta_charge(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'FIREWORK_EFFECT')
     if 'Explosions' in meta_item_tag:
         meta['firework-effects'] = [serialize_explosion_effect(effect) for effect in meta_item_tag['Explosions']]
     return meta
-    
+
 
 def serialize_meta_knowledge_book(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'KNOWLEDGE_BOOK')
@@ -259,7 +255,7 @@ def serialize_meta_knowledge_book(meta_item_tag):
     if 'Recipes' in meta_item_tag and len(meta_item_tag['Recipes']) > 0:
         meta['Recipes'] = meta_item_tag['Recipes'].value
     return meta
-    
+
 
 def serialize_meta_tropical_fish_bucket(meta_item_tag):
     # TODO: Test tropical fish bucket (see "serialize_meta_axolotl_bucket")
@@ -270,7 +266,7 @@ def serialize_meta_tropical_fish_bucket(meta_item_tag):
     if 'BucketVariantTag' in meta_item_tag:
         meta['fish-variant'] = meta_item_tag['BucketVariantTag'].value
     return meta
-    
+
 
 def serialize_meta_axolotl_bucket(meta_item_tag):
     # TODO: Test axolotl fish bucket!! (EntityTag doesn't work as expected)
@@ -281,7 +277,7 @@ def serialize_meta_axolotl_bucket(meta_item_tag):
     if 'Variant' in meta_item_tag:
         meta['axolotl-variant'] = meta_item_tag['Variant'].value
     return meta
-    
+
 
 def serialize_meta_crossbow(meta_item_tag):
     # TODO: Test crossbow (charged projectiles)
@@ -290,15 +286,14 @@ def serialize_meta_crossbow(meta_item_tag):
     if 'ChargedProjectiles' in meta_item_tag:
         meta['charged-projectiles'] = meta_item_tag['ChargedProjectiles'].value
     return meta
-    
+
 
 def serialize_meta_suspicious_stew(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'SUSPICIOUS_STEW')
-    # TODO: Test suspicious stew effects
     if 'effects' in meta_item_tag:
         meta['effects'] = [serialize_potion_effect(effect) for effect in meta_item_tag['effects']]
     return meta
-    
+
 
 def serialize_meta_entity_tag(meta_item_tag):
     # TODO: Test with salmon or pufferfish bucket (see "serialize_meta_axolotl_bucket")
@@ -307,7 +302,7 @@ def serialize_meta_entity_tag(meta_item_tag):
         internal_tag = meta_item_tag['EntityTag']
     meta = serialize_meta_item(meta_item_tag, 'ENTITY_TAG', internal_tag)
     return meta
-    
+
 
 def serialize_meta_compass(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'COMPASS')
@@ -319,22 +314,21 @@ def serialize_meta_compass(meta_item_tag):
     if 'LodestoneTracked' in meta_item_tag:
         meta['LodestoneTracked'] = bool(meta_item_tag['LodestoneTracked'].value)
     return meta
-    
+
 
 def serialize_meta_bundle(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'BUNDLE')
     # TODO: Serialize bundle (to be implemented)
     # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBundle.java
     return meta
-    
+
 
 def serialize_meta_music_instrument(meta_item_tag):
-    # TODO: Test music instrument
     meta = serialize_meta_item(meta_item_tag, 'MUSIC_INSTRUMENT')
     if 'instrument' in meta_item_tag:
         meta['instrument'] = meta_item_tag['instrument'].value
     return meta
-    
+
 
 def serialize_meta_item(meta_item_tag, meta_type='UNSPECIFIC', internal_tag=None):
     # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
@@ -410,9 +404,9 @@ def serialize_meta_fn(item_type: str) -> ():
          'WITHER_SKELETON_WALL_SKULL', 'ZOMBIE_HEAD', 'ZOMBIE_WALL_HEAD',): serialize_meta_skull,
         ('CHAINMAIL_HELMET', 'CHAINMAIL_CHESTPLATE', 'CHAINMAIL_LEGGINGS', 'CHAINMAIL_BOOTS', 'DIAMOND_HELMET',
          'DIAMOND_CHESTPLATE', 'DIAMOND_LEGGINGS', 'DIAMOND_BOOTS', 'GOLDEN_HELMET', 'GOLDEN_CHESTPLATE',
-         'GOLDEN_LEGGINGS',
-         'GOLDEN_BOOTS', 'IRON_HELMET', 'IRON_CHESTPLATE', 'IRON_LEGGINGS', 'IRON_BOOTS', 'NETHERITE_HELMET',
-         'NETHERITE_CHESTPLATE', 'NETHERITE_LEGGINGS', 'NETHERITE_BOOTS', 'TURTLE_HELMET',): serialize_meta_armor,
+         'GOLDEN_LEGGINGS', 'GOLDEN_BOOTS', 'IRON_HELMET', 'IRON_CHESTPLATE', 'IRON_LEGGINGS', 'IRON_BOOTS',
+         'NETHERITE_HELMET', 'NETHERITE_CHESTPLATE', 'NETHERITE_LEGGINGS', 'NETHERITE_BOOTS',
+         'TURTLE_HELMET',): serialize_meta_armor,
         ('LEATHER_HELMET', 'LEATHER_CHESTPLATE', 'LEATHER_LEGGINGS', 'LEATHER_BOOTS',): serialize_meta_colorable_armor,
         ('LEATHER_HORSE_ARMOR',): serialize_meta_leather_armor,
         ('POTION', 'SPLASH_POTION', 'LINGERING_POTION', 'TIPPED_ARROW',): serialize_meta_potion,
@@ -424,9 +418,8 @@ def serialize_meta_fn(item_type: str) -> ():
          'CYAN_BANNER', 'CYAN_WALL_BANNER', 'GRAY_BANNER', 'GRAY_WALL_BANNER', 'GREEN_BANNER', 'GREEN_WALL_BANNER',
          'LIGHT_BLUE_BANNER', 'LIGHT_BLUE_WALL_BANNER', 'LIGHT_GRAY_BANNER', 'LIGHT_GRAY_WALL_BANNER', 'LIME_BANNER',
          'LIME_WALL_BANNER', 'MAGENTA_BANNER', 'MAGENTA_WALL_BANNER', 'ORANGE_BANNER', 'ORANGE_WALL_BANNER',
-         'PINK_BANNER',
-         'PINK_WALL_BANNER', 'PURPLE_BANNER', 'PURPLE_WALL_BANNER', 'RED_BANNER', 'RED_WALL_BANNER', 'WHITE_BANNER',
-         'WHITE_WALL_BANNER', 'YELLOW_BANNER', 'YELLOW_WALL_BANNER',): serialize_meta_banner,
+         'PINK_BANNER', 'PINK_WALL_BANNER', 'PURPLE_BANNER', 'PURPLE_WALL_BANNER', 'RED_BANNER', 'RED_WALL_BANNER',
+         'WHITE_BANNER', 'WHITE_WALL_BANNER', 'YELLOW_BANNER', 'YELLOW_WALL_BANNER',): serialize_meta_banner,
         ('ALLAY_SPAWN_EGG', 'AXOLOTL_SPAWN_EGG', 'BAT_SPAWN_EGG', 'BEE_SPAWN_EGG', 'BLAZE_SPAWN_EGG',
          'BREEZE_SPAWN_EGG', 'CAT_SPAWN_EGG', 'CAMEL_SPAWN_EGG', 'CAVE_SPIDER_SPAWN_EGG', 'CHICKEN_SPAWN_EGG',
          'COD_SPAWN_EGG', 'COW_SPAWN_EGG', 'CREEPER_SPAWN_EGG', 'DOLPHIN_SPAWN_EGG', 'DONKEY_SPAWN_EGG',
@@ -448,18 +441,17 @@ def serialize_meta_fn(item_type: str) -> ():
         ('KNOWLEDGE_BOOK',): serialize_meta_knowledge_book,
         ('FURNACE', 'CHEST', 'TRAPPED_CHEST', 'JUKEBOX', 'DISPENSER', 'DROPPER', 'ACACIA_HANGING_SIGN', 'ACACIA_SIGN',
          'ACACIA_WALL_HANGING_SIGN', 'ACACIA_WALL_SIGN', 'BAMBOO_HANGING_SIGN', 'BAMBOO_SIGN',
-         'BAMBOO_WALL_HANGING_SIGN',
-         'BAMBOO_WALL_SIGN', 'BIRCH_HANGING_SIGN', 'BIRCH_SIGN', 'BIRCH_WALL_HANGING_SIGN', 'BIRCH_WALL_SIGN',
-         'CHERRY_HANGING_SIGN', 'CHERRY_SIGN', 'CHERRY_WALL_HANGING_SIGN', 'CHERRY_WALL_SIGN', 'CRIMSON_HANGING_SIGN',
-         'CRIMSON_SIGN', 'CRIMSON_WALL_HANGING_SIGN', 'CRIMSON_WALL_SIGN', 'DARK_OAK_HANGING_SIGN', 'DARK_OAK_SIGN',
-         'DARK_OAK_WALL_HANGING_SIGN', 'DARK_OAK_WALL_SIGN', 'JUNGLE_HANGING_SIGN', 'JUNGLE_SIGN',
-         'JUNGLE_WALL_HANGING_SIGN', 'JUNGLE_WALL_SIGN', 'MANGROVE_HANGING_SIGN', 'MANGROVE_SIGN',
-         'MANGROVE_WALL_HANGING_SIGN', 'MANGROVE_WALL_SIGN', 'OAK_HANGING_SIGN', 'OAK_SIGN', 'OAK_WALL_HANGING_SIGN',
-         'OAK_WALL_SIGN', 'SPRUCE_HANGING_SIGN', 'SPRUCE_SIGN', 'SPRUCE_WALL_HANGING_SIGN', 'SPRUCE_WALL_SIGN',
-         'WARPED_HANGING_SIGN', 'WARPED_SIGN', 'WARPED_WALL_HANGING_SIGN', 'WARPED_WALL_SIGN', 'SPAWNER',
-         'BREWING_STAND', 'ENCHANTING_TABLE', 'COMMAND_BLOCK', 'REPEATING_COMMAND_BLOCK', 'CHAIN_COMMAND_BLOCK',
-         'BEACON', 'DAYLIGHT_DETECTOR', 'HOPPER', 'COMPARATOR', 'SHIELD', 'STRUCTURE_BLOCK', 'SHULKER_BOX',
-         'WHITE_SHULKER_BOX', 'ORANGE_SHULKER_BOX', 'MAGENTA_SHULKER_BOX', 'LIGHT_BLUE_SHULKER_BOX',
+         'BAMBOO_WALL_HANGING_SIGN', 'BAMBOO_WALL_SIGN', 'BIRCH_HANGING_SIGN', 'BIRCH_SIGN', 'BIRCH_WALL_HANGING_SIGN',
+         'BIRCH_WALL_SIGN', 'CHERRY_HANGING_SIGN', 'CHERRY_SIGN', 'CHERRY_WALL_HANGING_SIGN', 'CHERRY_WALL_SIGN',
+         'CRIMSON_HANGING_SIGN', 'CRIMSON_SIGN', 'CRIMSON_WALL_HANGING_SIGN', 'CRIMSON_WALL_SIGN',
+         'DARK_OAK_HANGING_SIGN', 'DARK_OAK_SIGN', 'DARK_OAK_WALL_HANGING_SIGN', 'DARK_OAK_WALL_SIGN',
+         'JUNGLE_HANGING_SIGN', 'JUNGLE_SIGN', 'JUNGLE_WALL_HANGING_SIGN', 'JUNGLE_WALL_SIGN', 'MANGROVE_HANGING_SIGN',
+         'MANGROVE_SIGN', 'MANGROVE_WALL_HANGING_SIGN', 'MANGROVE_WALL_SIGN', 'OAK_HANGING_SIGN', 'OAK_SIGN',
+         'OAK_WALL_HANGING_SIGN', 'OAK_WALL_SIGN', 'SPRUCE_HANGING_SIGN', 'SPRUCE_SIGN', 'SPRUCE_WALL_HANGING_SIGN',
+         'SPRUCE_WALL_SIGN', 'WARPED_HANGING_SIGN', 'WARPED_SIGN', 'WARPED_WALL_HANGING_SIGN', 'WARPED_WALL_SIGN',
+         'SPAWNER', 'BREWING_STAND', 'ENCHANTING_TABLE', 'COMMAND_BLOCK', 'REPEATING_COMMAND_BLOCK',
+         'CHAIN_COMMAND_BLOCK', 'BEACON', 'DAYLIGHT_DETECTOR', 'HOPPER', 'COMPARATOR', 'SHIELD', 'STRUCTURE_BLOCK',
+         'SHULKER_BOX', 'WHITE_SHULKER_BOX', 'ORANGE_SHULKER_BOX', 'MAGENTA_SHULKER_BOX', 'LIGHT_BLUE_SHULKER_BOX',
          'YELLOW_SHULKER_BOX', 'LIME_SHULKER_BOX', 'PINK_SHULKER_BOX', 'GRAY_SHULKER_BOX', 'LIGHT_GRAY_SHULKER_BOX',
          'CYAN_SHULKER_BOX', 'PURPLE_SHULKER_BOX', 'BLUE_SHULKER_BOX', 'BROWN_SHULKER_BOX', 'GREEN_SHULKER_BOX',
          'RED_SHULKER_BOX', 'BLACK_SHULKER_BOX', 'ENDER_CHEST', 'BARREL', 'BELL', 'BLAST_FURNACE', 'CAMPFIRE',
