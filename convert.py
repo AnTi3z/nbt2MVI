@@ -111,21 +111,22 @@ def serialize_meta_armor_stand(meta_item_tag):
 
 
 def serialize_meta_banner(meta_item_tag):
+    dye_colors = ('WHITE', 'ORANGE', 'MAGENTA', 'LIGHT_BLUE', 'YELLOW', 'LIME', 'PINK', 'GRAY',
+                  'LIGHT_GRAY', 'CYAN', 'PURPLE', 'BLUE', 'BROWN', 'GREEN', 'RED', 'BLACK')
     meta = serialize_meta_item(meta_item_tag, 'BANNER')
     entity_tag = meta_item_tag.get('BlockEntityTag')
     if entity_tag is None:
         return meta
-    # TODO: Test banner
     if 'Base' in entity_tag:
-        # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/DyeColor.java
-        meta['base-color'] = entity_tag['Base'].value  # should be stringified DyeColor value
+        meta['base-color'] = dye_colors[entity_tag['Base'].value]
     if 'Patterns' in entity_tag and len(entity_tag['Patterns']) > 0:
         meta['patterns'] = []
         for pattern in entity_tag['Patterns']:
             meta['patterns'].append(
                 {
-                    'color': pattern['Color'].value,  # should be stringified DyeColor value
-                    'pattern': pattern['Pattern'].value  # string
+                    '==': 'Pattern',
+                    'color': dye_colors[pattern['Color'].value],
+                    'pattern': pattern['Pattern'].value
                 }
             )
     return meta
