@@ -105,7 +105,7 @@ def serialize_explosion_effect(effect):
 
 def serialize_modifiers(modifiers):
     result = {}
-    # TODO: Serialize attribute modifiers (to be implemented)
+    # TODO: Implement attribute modifiers serialization
     # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java#413
     for mod in modifiers:
         pass
@@ -191,7 +191,7 @@ def serialize_meta_book_signed(meta_item_tag):
 
 def serialize_meta_skull(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'SKULL')
-    # TODO: Implement skull owner
+    # TODO: Implement skull owner profile serialization
     # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
     if 'SkullOwner' in meta_item_tag:
         # meta['skull-owner'] = meta_item_tag['SkullOwner'] # TAG_String or TAG_Compound
