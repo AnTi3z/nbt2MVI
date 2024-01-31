@@ -116,7 +116,7 @@ def serialize_modifiers(modifiers):
             'amount': modifier['Amount'].value,
         }
         if 'Slot' in modifier:
-            attrib_mod['slot'] = modifier['Slot']
+            attrib_mod['slot'] = modifier['Slot'].value
         attrib = result.setdefault(modifier['AttributeName'].value, [])
         attrib.append(attrib_mod)
     return result
