@@ -182,7 +182,20 @@ def serialize_meta_book(meta_item_tag, meta_type='BOOK'):
         # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java#111
         # max_page_length = 320
         # if meta_type == 'BOOK_SIGNED':
-        #    page = CraftChatMessage.fromJSONOrStringToJSON(page, nullable=false, keepNewlines=true, max_page_length, checkJsonContentLength=false)
+        # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/util/CraftChatMessage.java
+        #     page = CraftChatMessage.fromJSONOrStringToJSON(page,
+        #                                                    nullable=false,
+        #                                                    keepNewlines=true,
+        #                                                    max_page_length,
+        #                                                    checkJsonContentLength=false) ->
+        #     page = "" if null
+        #     IChatBaseComponent component = IChatBaseComponent.ChatSerializer.fromJson(page)
+        #     if component: return page
+        #     else:
+        #         page = page[:max_page_length]
+        #         IChatBaseComponent component = new StringMessage(page, keepNewlines=true, plain=false).getOutput()[0]
+        #         json_page = IChatBaseComponent.ChatSerializer.toJson(component)
+        #
         # else:
         #    pages = [page[:max_page_length] for page in pages]
         meta['pages'] = list(pages)
@@ -203,15 +216,18 @@ def serialize_meta_skull(meta_item_tag):
     # TODO: Implement skull owner profile serialization
     # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
     if 'SkullOwner' in meta_item_tag:
-        # meta['skull-owner'] = meta_item_tag['SkullOwner'] # TAG_String or TAG_Compound
-        # GameProfileSerializer.readGameProfile(TAG_Compound)
-        # GameProfile(TAG_String) # UUID ?
-        # {
-        #     '==': 'PlayerProfile',
-        #     'uniqueId': None,
-        #     'name': None,
-        #     'properties': []
-        # }
+        # meta['skull-owner'] =
+        # meta_item_tag['SkullOwner'] # TAG_String or TAG_Compound
+        # 1: profile = GameProfileSerializer.readGameProfile(TAG_Compound)
+        # 2: profile = GameProfile(TAG_String) # UUID ?
+        #    -> CraftPlayerProfile(profile).serialize
+        #    https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/profile/CraftPlayerProfile.java#239
+        #    {
+        #        '==': 'PlayerProfile',
+        #        'uniqueId': '',  #if no null
+        #        'name': '',  #if not null
+        #        'properties': []  #if has properties
+        #    }
         pass
     if 'BlockEntityTag' in meta_item_tag and 'note_block_sound' in meta_item_tag['BlockEntityTag']:
         meta['note_block_sound'] = meta_item_tag['BlockEntityTag']['note_block_sound'].value
