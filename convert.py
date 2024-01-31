@@ -5,6 +5,7 @@ import base64
 
 import nbt
 
+# https://minecraft.wiki/w/Item_format
 # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/
 # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/
 # https://github.com/Multiverse/Multiverse-Inventories/
