@@ -92,14 +92,13 @@ def serialize_potion_effect(effect):
 
 
 def serialize_explosion_effect(effect):
-    # TODO: Test explosion effects
     effect_types = ('BALL', 'BALL_LARGE', 'STAR', 'CREEPER', 'BURST')
     return {
-                '==': 'FireworkEffect',
-                'flicker': bool(effect['Flicker'].value),
-                'trail': bool(effect['Trail'].value),
-                'colors': [serialize_color(color) for color in effect['Colors']],
-                'fade-colors': [serialize_color(color) for color in effect['FadeColors']],
+                '==': 'Firework',
+                'flicker': bool(effect.get('Flicker', False)),
+                'trail': bool(effect.get('Trail', False)),
+                'colors': [serialize_color(color) for color in effect['Colors']],  # always has color
+                'fade-colors': [serialize_color(color) for color in effect.get('FadeColors', [])],
                 'type': effect_types[effect['Type'].value]
             }
 
@@ -272,8 +271,8 @@ def serialize_meta_firework(meta_item_tag):
 
 def serialize_meta_charge(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'FIREWORK_EFFECT')
-    if 'Explosions' in meta_item_tag:
-        meta['firework-effects'] = [serialize_explosion_effect(effect) for effect in meta_item_tag['Explosions']]
+    if 'Explosion' in meta_item_tag:
+        meta['firework-effect'] = serialize_explosion_effect(meta_item_tag['Explosion'])
     return meta
 
 
