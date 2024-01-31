@@ -341,9 +341,10 @@ def serialize_meta_compass(meta_item_tag):
 
 
 def serialize_meta_bundle(meta_item_tag):
+    # TODO: Test Bundle
     meta = serialize_meta_item(meta_item_tag, 'BUNDLE')
-    # TODO: Serialize bundle (to be implemented)
-    # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBundle.java
+    if 'Items' in meta_item_tag and len(meta_item_tag['Items']) > 0:
+        meta['items'] = [serialize_item_stack(item_stack) for item_stack in meta_item_tag['Items']]
     return meta
 
 
