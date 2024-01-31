@@ -398,8 +398,8 @@ def serialize_meta_item(meta_item_tag, meta_type='UNSPECIFIC', internal_tag=None
         # TODO: Test item hide flags
         hide_flag = meta_item_tag['HideFlags'].value
         item_flags = zip(format(hide_flag, '08b'),
-                         ('HIDE_ENCHANTS', 'HIDE_ATTRIBUTES', 'HIDE_UNBREAKABLE', 'HIDE_DESTROYS',
-                          'HIDE_PLACED_ON', 'HIDE_POTION_EFFECTS', 'HIDE_DYE', 'HIDE_ARMOR_TRIM')
+                         ('HIDE_ARMOR_TRIM', 'HIDE_DYE', 'HIDE_POTION_EFFECTS', 'HIDE_PLACED_ON',
+                          'HIDE_DESTROYS', 'HIDE_UNBREAKABLE', 'HIDE_ATTRIBUTES', 'HIDE_ENCHANTS')
                          )
         meta['ItemFlags'] = [flag for bit, flag in item_flags if bit == '1']
 
