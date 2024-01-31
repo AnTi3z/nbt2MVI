@@ -104,11 +104,20 @@ def serialize_explosion_effect(effect):
 
 
 def serialize_modifiers(modifiers):
+    # TODO: Test attribute modifiers
     result = {}
-    # TODO: Implement attribute modifiers serialization
-    # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java#413
-    for mod in modifiers:
-        pass
+    for modifier in modifiers:
+        uuid_list = [num & 0xffffffff for num in modifier['UUID']]
+        attrib_mod = {
+            'uuid': f'{hex(uuid_list[0])[2:]}-{hex(uuid_list[1])[2:6]}-{hex(uuid_list[1])[6:12]}-{hex(uuid_list[2])[2:6]}-{hex(uuid_list[2])[6:12]}{hex(uuid_list[3])[2:]}',
+            'name': modifier['Name'].value,
+            'operation': modifier['Operation'].value,
+            'amount': modifier['Amount'].value,
+        }
+        if 'Slot' in modifier:
+            attrib_mod['slot'] = modifier['Slot']
+        attrib = result.setdefault(modifier['AttributeName'].value, [])
+        attrib.append(attrib_mod)
     return result
 
 
