@@ -73,8 +73,8 @@ def serialize_color(color_int, has_alpha=False):
     return {
         '==': 'Color',
         'ALPHA': color_int >> 24 & 0xff if has_alpha else 255,
-        'RED': color_int >> 0 & 0xff,
-        'BLUE': color_int >> 16 & 0xff,
+        'RED': color_int >> 16 & 0xff,
+        'BLUE': color_int >> 0 & 0xff,
         'GREEN': color_int >> 8 & 0xff
     }
 
