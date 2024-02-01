@@ -336,7 +336,6 @@ def serialize_meta_axolotl_bucket(meta_item_tag):
 
 
 def serialize_meta_crossbow(meta_item_tag):
-    # TODO: Test crossbow (charged projectiles)
     meta = serialize_meta_item(meta_item_tag, 'CROSSBOW')
     meta['charged'] = bool(meta_item_tag['Charged'].value)
     if 'ChargedProjectiles' in meta_item_tag and len(meta_item_tag['ChargedProjectiles']) > 0:
