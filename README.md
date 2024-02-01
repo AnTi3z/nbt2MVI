@@ -17,6 +17,8 @@ python ./convert.py <player.dat> [MVWorld]
 **player.dat** - Filename of saved minecraft player state in [nbt format](https://minecraft.wiki/w/Player.dat_format) to be converted.<br/>
 **MVWorld** - Multiverse world(overworld) name. 'world' by deafult
 
+File with lastKnown playername and .json extension will be created in the same directory.
+
 ## Known issues:
 See TODOs in convert.py<br/>
 
