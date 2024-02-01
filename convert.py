@@ -105,19 +105,24 @@ def serialize_explosion_effect(effect):
 
 
 def serialize_modifiers(modifiers):
-    # TODO: Test attribute modifiers
     result = {}
     for modifier in modifiers:
-        uuid_list = [num & 0xffffffff for num in modifier['UUID']]
+        hexed_uuid = [format(num & 0xffffffff, '08x') for num in modifier['UUID']]
         attrib_mod = {
-            'uuid': f'{hex(uuid_list[0])[2:]}-{hex(uuid_list[1])[2:6]}-{hex(uuid_list[1])[6:12]}-{hex(uuid_list[2])[2:6]}-{hex(uuid_list[2])[6:12]}{hex(uuid_list[3])[2:]}',
-            'name': modifier['Name'].value,
-            'operation': modifier['Operation'].value,
+            "==": "org.bukkit.attribute.AttributeModifier",
             'amount': modifier['Amount'].value,
+            'name': modifier['Name'].value,
+            'uuid': f'{hexed_uuid[0]}-{hexed_uuid[1][:4]}-{hexed_uuid[1][4:8]}-{hexed_uuid[2][:4]}-{hexed_uuid[2][4:8]}{hexed_uuid[3]}',
+            'operation': modifier['Operation'].value,
         }
         if 'Slot' in modifier:
-            attrib_mod['slot'] = modifier['Slot'].value
-        attrib = result.setdefault(modifier['AttributeName'].value, [])
+            attrib_mod['slot'] = modifier['Slot'].value.upper()
+            if attrib_mod['slot'] == 'MAINHAND':
+                attrib_mod['slot'] = 'HAND'
+            elif attrib_mod['slot'] == 'OFFHAND':
+                attrib_mod['slot'] = 'OFF_HAND'
+        attrib_name = modifier['AttributeName'].value.split(':')[1].replace('.', '_').upper()
+        attrib = result.setdefault(attrib_name, [])
         attrib.append(attrib_mod)
     return result
 
