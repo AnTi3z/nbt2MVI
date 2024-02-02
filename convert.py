@@ -401,8 +401,7 @@ def serialize_meta_item(meta_item_tag, meta_type='UNSPECIFIC', internal_tag=None
         if 'LocName' in display:
             meta['loc-name'] = display['LocName'].value
         if 'Lore' in display and len(display['Lore']) > 0:
-            # TODO: Test item lore
-            meta['lore'] = list(display['Lore'])
+            meta['lore'] = [text.value for text in display['Lore']]
 
     if 'CustomModelData' in meta_item_tag:
         meta['custom-model-data'] = meta_item_tag['CustomModelData'].value
