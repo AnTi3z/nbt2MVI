@@ -204,7 +204,7 @@ def serialize_meta_book(meta_item_tag, meta_type='BOOK'):
         #
         # else:
         #    pages = [page[:max_page_length] for page in pages]
-        meta['pages'] = list(pages)
+        meta['pages'] = [page.value for page in pages]
     if 'resolved' in meta_item_tag:
         meta['resolved'] = bool(meta_item_tag['resolved'].value)
     if 'generation' in meta_item_tag:
@@ -311,7 +311,7 @@ def serialize_meta_knowledge_book(meta_item_tag):
     meta = serialize_meta_item(meta_item_tag, 'KNOWLEDGE_BOOK')
     # TODO: Test knowledge book
     if 'Recipes' in meta_item_tag and len(meta_item_tag['Recipes']) > 0:
-        meta['Recipes'] = list(meta_item_tag['Recipes'])
+        meta['Recipes'] = [recipe.value for recipe in meta_item_tag['Recipes']]
     return meta
 
 
