@@ -23,13 +23,10 @@ File with lastKnown playername and .json extension will be created in the same d
 See TODOs in convert.py<br/>
 
 Still need some tests:
-- [ ]Knowledge book
-- [ ]Bundle
-- [ ]Item lore
-- [ ]Item HideFlags
+- Knowledge book (Creative mode only)
 
 And implementation of some very specific futures:
-- [ ]Skull owner profiles
-- [ ]Written book pages json normlization
-- [ ]BlockStateTag
-- [ ]Custom tag
+- Skull owner profiles
+- Written book pages json normlization
+- BlockStateTag
+- Custom tag
